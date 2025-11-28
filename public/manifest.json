@@ -1,10 +1,11 @@
 {
   "name": "毛孩食記",
   "short_name": "毛孩食記",
-  "start_url": ".",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#f97316",
+  "orientation": "portrait",
   "description": "記錄毛孩對於某個參戰選手吃不吃的 PWA",
   "icons": [
     {

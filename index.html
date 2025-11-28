@@ -16,12 +16,14 @@
     <meta name="apple-mobile-web-app-title" content="毛孩食記" />
     <link rel="apple-touch-icon" href="icon.png" />
     
-    <!-- Theme Color for Mobile Browsers -->
+    <!-- Theme Color -->
     <meta name="theme-color" content="#f97316" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS (CDN is okay for this lightweight setup, but importmap must go) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -56,10 +58,11 @@
           -ms-overflow-style: none;  /* IE and Edge */
           scrollbar-width: none;  /* Firefox */
       }
-      /* Safe area padding for iPhones */
       body {
         padding-top: env(safe-area-inset-top);
         padding-bottom: env(safe-area-inset-bottom);
+        /* Prevent bounce scroll on iOS */
+        overscroll-behavior-y: none;
       }
     </style>
   <script type="importmap">
@@ -79,7 +82,7 @@
 <link rel="stylesheet" href="/index.css">
 </head>
   <!-- Fixed inset-0 ensures full screen on iOS PWA -->
-  <body class="bg-slate-50 text-slate-900 fixed inset-0 w-full h-full font-sans overflow-hidden">
+  <body class="bg-slate-50 text-slate-900 fixed inset-0 w-full h-full font-sans overflow-hidden select-none">
     <div id="root" class="h-full w-full flex flex-col"></div>
     <script type="module" src="./index.tsx"></script>
   <script type="module" src="/index.tsx"></script>
