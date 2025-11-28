@@ -8,16 +8,16 @@
     />
     <title>毛孩食記</title>
 
-    <!-- Favicon (Root Absolute Path with Cache Busting) -->
-    <link rel="icon" type="image/png" href="/icon.png?v=2" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/icon.png" />
 
     <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="毛孩食記" />
     
-    <!-- iOS Home Screen Icon (Added version to force refresh) -->
-    <link rel="apple-touch-icon" href="/icon.png?v=2" />
+    <!-- iOS Home Screen Icon (Critical Fix) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon.png" />
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json" />
@@ -62,7 +62,7 @@
         background-color: #f8fafc;
       }
     </style>
-<script type="importmap">
+  <script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
