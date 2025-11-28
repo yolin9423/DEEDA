@@ -1,0 +1,7 @@
+{
+  "name": "毛孩食記 (Pet Foodie)",
+  "description": "A mobile-first PWA to track your pet's food preferences, reactions, and analyze ingredients using Gemini AI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
