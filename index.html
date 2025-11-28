@@ -1,29 +1,33 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="icon.png" />
-    <!-- viewport-fit=cover is essential for iPhones with notches -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
     <title>毛孩食記</title>
-    
-    <!-- PWA Manifest -->
-    <link rel="manifest" href="manifest.json" />
-    
-    <!-- iOS Support -->
+
+    <!-- Favicon (Root Absolute Path) -->
+    <link rel="icon" type="image/png" href="/icon.png" />
+
+    <!-- iOS PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="毛孩食記" />
-    <link rel="apple-touch-icon" href="icon.png" />
-    
-    <!-- Theme Color -->
+    <!-- iOS Home Screen Icon -->
+    <link rel="apple-touch-icon" href="/icon.png" />
+
+    <!-- PWA Manifest (Root Absolute Path) -->
+    <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#f97316" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS (CDN for simple setup) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -49,34 +53,25 @@
       }
     </script>
     <style>
-      /* Hide scrollbar for Chrome, Safari and Opera */
-      .no-scrollbar::-webkit-scrollbar {
-          display: none;
-      }
-      /* Hide scrollbar for IE, Edge and Firefox */
-      .no-scrollbar {
-          -ms-overflow-style: none;  /* IE and Edge */
-          scrollbar-width: none;  /* Firefox */
-      }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       body {
         padding-top: env(safe-area-inset-top);
         padding-bottom: env(safe-area-inset-bottom);
-        /* Prevent bounce scroll on iOS */
         overscroll-behavior-y: none;
-        background-color: #f8fafc; /* match slate-50 */
+        background-color: #f8fafc;
       }
     </style>
-    <!-- CRITICAL FIX: IMPORTMAP REMOVED TO PREVENT CONFLICTS WITH VITE BUILD -->
-<script type="importmap">
+    <!-- CRITICAL: IMPORTMAP REMOVED COMPLETELY -->
+  <script type="importmap">
 {
   "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "react": "https://aistudiocdn.com/react@^19.2.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
     "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
     "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
   }
 }
@@ -86,7 +81,6 @@
   <!-- Fixed inset-0 ensures full screen on iOS PWA -->
   <body class="bg-slate-50 text-slate-900 fixed inset-0 w-full h-full font-sans overflow-hidden select-none">
     <div id="root" class="h-full w-full flex flex-col"></div>
-    <script type="module" src="./index.tsx"></script>
-  <script type="module" src="/index.tsx"></script>
-</body>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>
