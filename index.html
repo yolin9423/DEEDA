@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="./icon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- viewport-fit=cover is essential for iPhones with notches -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>毛孩食記</title>
     
     <!-- PWA Manifest -->
@@ -55,8 +56,14 @@
           -ms-overflow-style: none;  /* IE and Edge */
           scrollbar-width: none;  /* Firefox */
       }
+      /* Safe area padding for iPhones */
+      body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
     </style>
-<script type="importmap">
+    <!-- REMOVED IMPORTMAP to avoid conflict with Vite build -->
+  <script type="importmap">
 {
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
@@ -72,7 +79,8 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="bg-slate-50 text-slate-900 overflow-hidden fixed w-full h-full font-sans">
+  <!-- Changed h-full to h-[100dvh] for better mobile browser support -->
+  <body class="bg-slate-50 text-slate-900 overflow-hidden fixed w-full h-[100dvh] font-sans">
     <div id="root" class="h-full w-full flex flex-col"></div>
     <script type="module" src="./index.tsx"></script>
   <script type="module" src="/index.tsx"></script>
