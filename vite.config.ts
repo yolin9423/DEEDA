@@ -8,7 +8,7 @@ export default defineConfig({
   publicDir: 'public', // Files in here will be copied to root on build
   build: {
     outDir: 'dist',
-    target: 'es2015', // Older target prevents white screen on older iOS
+    target: 'es2015', // CRITICAL: Older target prevents white screen on older iOS
     cssTarget: 'chrome61',
   },
 });
