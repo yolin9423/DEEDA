@@ -20,6 +20,7 @@ const AddFood: React.FC<AddFoodProps> = ({ onSave, onCancel, initialData }) => {
   });
   const [notes, setNotes] = useState('');
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [isCompressing, setIsCompressing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Initialize form if editing
@@ -36,14 +37,65 @@ const AddFood: React.FC<AddFoodProps> = ({ onSave, onCancel, initialData }) => {
 
   const generateId = () => Math.random().toString(36).substr(2, 9);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Helper function to compress image
+  const compressImage = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (event) => {
+        const img = new Image();
+        img.src = event.target?.result as string;
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 800;
+          const MAX_HEIGHT = 800;
+          let width = img.width;
+          let height = img.height;
+
+          // Resize logic
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            // Compress to JPEG at 0.7 quality
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+            resolve(dataUrl);
+          } else {
+            reject(new Error("Canvas context failed"));
+          }
+        };
+        img.onerror = (err) => reject(err);
+      };
+      reader.onerror = (err) => reject(err);
+    });
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setIsCompressing(true);
+      try {
+        const compressedDataUrl = await compressImage(file);
+        setImagePreview(compressedDataUrl);
+      } catch (error) {
+        console.error("Image compression failed", error);
+        alert("圖片處理失敗，請重試");
+      } finally {
+        setIsCompressing(false);
+      }
     }
   };
 
@@ -111,13 +163,20 @@ const AddFood: React.FC<AddFoodProps> = ({ onSave, onCancel, initialData }) => {
             ) : (
               <button
                 type="button"
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => !isCompressing && fileInputRef.current?.click()}
+                disabled={isCompressing}
                 className="w-full h-32 border-2 border-dashed border-slate-300 rounded-2xl flex flex-col items-center justify-center text-slate-400 bg-white hover:bg-slate-50 transition-colors gap-2"
               >
-                <div className="p-3 bg-brand-50 rounded-full">
-                    <Camera className="w-6 h-6 text-brand-500" />
-                </div>
-                <span className="text-sm font-medium">上傳照片 (方形)</span>
+                {isCompressing ? (
+                  <RefreshCw className="w-6 h-6 text-brand-500 animate-spin" />
+                ) : (
+                  <div className="p-3 bg-brand-50 rounded-full">
+                      <Camera className="w-6 h-6 text-brand-500" />
+                  </div>
+                )}
+                <span className="text-sm font-medium">
+                  {isCompressing ? '處理中...' : '上傳照片 (方形)'}
+                </span>
               </button>
             )}
           </div>
@@ -190,7 +249,8 @@ const AddFood: React.FC<AddFoodProps> = ({ onSave, onCancel, initialData }) => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-4 bg-brand-500 text-white rounded-xl font-bold text-lg shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+            disabled={isCompressing}
+            className={`w-full py-4 bg-brand-500 text-white rounded-xl font-bold text-lg shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 ${isCompressing ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <Save className="w-5 h-5" />
             {initialData ? '更新紀錄' : '儲存紀錄'}

@@ -29,10 +29,18 @@ const App: React.FC = () => {
     setLoading(false);
   }, []);
 
-  // Save to LocalStorage
+  // Save to LocalStorage with Error Handling
   useEffect(() => {
     if (!loading) {
-      localStorage.setItem('petFoodRecords', JSON.stringify(records));
+      try {
+        localStorage.setItem('petFoodRecords', JSON.stringify(records));
+      } catch (e) {
+        console.error("Storage failed", e);
+        // If QuotaExceededError, alert the user
+        if (e instanceof DOMException && (e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED')) {
+           alert("儲存空間已滿！無法儲存更多照片。請刪除舊紀錄或減少照片使用。");
+        }
+      }
     }
   }, [records, loading]);
 
@@ -55,6 +63,12 @@ const App: React.FC = () => {
     setActiveTab(AppTab.HISTORY);
   };
 
+  const handleDeleteRecord = (id: string) => {
+    if (window.confirm('確定要刪除這位參戰選手的紀錄嗎？刪除後無法復原喔！')) {
+        setRecords(prev => prev.filter(r => r.id !== id));
+    }
+  };
+
   const handleEditRequest = (record: FoodRecord) => {
       setEditingRecord(record);
       setActiveTab(AppTab.ADD);
@@ -75,9 +89,9 @@ const App: React.FC = () => {
       case AppTab.ADD:
         return <AddFood onSave={handleSaveRecord} initialData={editingRecord} onCancel={handleCancelEdit} />;
       case AppTab.HISTORY:
-        return <FoodList records={records} onEdit={handleEditRequest} title={appTitle} onTitleChange={handleTitleChange} />;
+        return <FoodList records={records} onEdit={handleEditRequest} onDelete={handleDeleteRecord} title={appTitle} onTitleChange={handleTitleChange} />;
       default:
-        return <FoodList records={records} onEdit={handleEditRequest} title={appTitle} onTitleChange={handleTitleChange} />;
+        return <FoodList records={records} onEdit={handleEditRequest} onDelete={handleDeleteRecord} title={appTitle} onTitleChange={handleTitleChange} />;
     }
   };
 

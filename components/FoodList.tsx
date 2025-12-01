@@ -1,16 +1,17 @@
 
 import React, { useState } from 'react';
-import { Search, Image as ImageIcon, Heart, Minus, X, Edit, Calendar } from 'lucide-react';
+import { Search, Image as ImageIcon, Heart, Minus, X, Edit, Calendar, Trash2 } from 'lucide-react';
 import { FoodRecord, ReactionType, FOOD_TYPE_LABELS, PETS, REACTION_LABELS } from '../types';
 
 interface FoodListProps {
   records: FoodRecord[];
   onEdit: (record: FoodRecord) => void;
+  onDelete: (id: string) => void;
   title: string;
   onTitleChange: (title: string) => void;
 }
 
-const FoodList: React.FC<FoodListProps> = ({ records, onEdit, title, onTitleChange }) => {
+const FoodList: React.FC<FoodListProps> = ({ records, onEdit, onDelete, title, onTitleChange }) => {
   const [filterText, setFilterText] = useState('');
   const [selectedType, setSelectedType] = useState<string>('all');
   const [previewRecord, setPreviewRecord] = useState<FoodRecord | null>(null);
@@ -205,17 +206,29 @@ const FoodList: React.FC<FoodListProps> = ({ records, onEdit, title, onTitleChan
                     </div>
                 )}
                 
-                {/* Action Buttons */}
-                <button
-                    onClick={() => {
-                        onEdit(previewRecord);
-                        setPreviewRecord(null);
-                    }}
-                    className="w-full py-3.5 bg-slate-800 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-700 active:scale-[0.98] transition-all shadow-lg"
-                >
-                    <Edit className="w-4 h-4" />
-                    編輯紀錄
-                </button>
+                {/* Action Buttons: Delete & Edit */}
+                <div className="flex gap-3 mt-8">
+                    <button
+                        onClick={() => {
+                            onDelete(previewRecord.id);
+                            setPreviewRecord(null);
+                        }}
+                        className="px-4 py-3.5 bg-red-50 text-red-500 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-red-100 active:scale-[0.98] transition-all"
+                    >
+                        <Trash2 className="w-4 h-4" />
+                        <span className="text-xs">刪除</span>
+                    </button>
+                    <button
+                        onClick={() => {
+                            onEdit(previewRecord);
+                            setPreviewRecord(null);
+                        }}
+                        className="flex-1 py-3.5 bg-slate-800 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-slate-700 active:scale-[0.98] transition-all shadow-lg"
+                    >
+                        <Edit className="w-4 h-4" />
+                        編輯紀錄
+                    </button>
+                </div>
             </div>
           </div>
         </div>
