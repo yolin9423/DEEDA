@@ -35,7 +35,8 @@ const FoodList: React.FC<FoodListProps> = ({ records, onEdit, title, onTitleChan
   };
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-50 relative pb-28">
+    // Increased pb-36 to make space for the floating pill nav
+    <div className="h-full overflow-y-auto bg-slate-50 relative pb-36">
       
       {/* Breathable Editable Title Section */}
       <div className="pt-20 pb-10 px-6">

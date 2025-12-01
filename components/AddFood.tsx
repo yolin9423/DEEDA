@@ -70,7 +70,8 @@ const AddFood: React.FC<AddFoodProps> = ({ onSave, onCancel, initialData }) => {
   };
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-50 pb-24">
+    // Increased pb-36 to accommodate floating pill nav
+    <div className="h-full overflow-y-auto bg-slate-50 pb-36">
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
