@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-TW">
   <head>
@@ -16,7 +17,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="毛孩食記" />
     
-    <!-- iOS Home Screen Icon (Critical Fix) -->
+    <!-- iOS Home Screen Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="/icon.png" />
 
     <!-- PWA Manifest -->
@@ -55,23 +56,24 @@
     <style>
       .no-scrollbar::-webkit-scrollbar { display: none; }
       .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      /* Removed padding-bottom: env(safe-area-inset-bottom) to prevent double spacing.
+         The App component now handles this via Tailwind classes. */
       body {
         padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
         overscroll-behavior-y: none;
         background-color: #f8fafc;
       }
     </style>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
     "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
-    "vite": "https://aistudiocdn.com/vite@^7.2.4",
-    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.555.0",
+    "vite": "https://aistudiocdn.com/vite@^7.2.6",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
   }
 }
 </script>

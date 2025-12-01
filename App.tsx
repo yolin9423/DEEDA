@@ -84,44 +84,50 @@ const App: React.FC = () => {
   if (loading) return <div className="h-full flex items-center justify-center bg-brand-50 text-brand-500">Loading...</div>;
 
   return (
-    <div className="h-full flex flex-col w-full max-w-md mx-auto bg-white shadow-2xl overflow-hidden relative">
+    // Use h-[100dvh] for dynamic viewport height on mobile browsers to avoid address bar issues
+    <div className="h-[100dvh] flex flex-col w-full max-w-md mx-auto bg-white shadow-2xl overflow-hidden relative">
       
       {/* Main Content Area */}
       <main className="flex-1 overflow-hidden relative">
         {renderContent()}
       </main>
 
-      {/* Bottom Navigation Bar - Grid 2 columns for balance */}
-      <nav className="h-16 bg-white border-t border-slate-100 z-50 absolute bottom-0 w-full grid grid-cols-2">
-        {/* Record Button (Left) */}
-        <button
-          onClick={() => setActiveTab(AppTab.HISTORY)}
-          className={`flex flex-col items-center justify-center gap-1 transition-colors ${
-            activeTab === AppTab.HISTORY ? 'bg-slate-50 text-brand-600' : 'bg-white text-slate-300 hover:text-slate-500'
-          }`}
-        >
-          <List className={`w-6 h-6 ${activeTab === AppTab.HISTORY ? 'stroke-brand-600' : 'stroke-current'}`} />
-          <span className="text-xs font-bold leading-none">記錄</span>
-        </button>
-
-        {/* Add Button (Right) */}
-        <button
-            onClick={handleAddClick}
+      {/* Bottom Navigation Bar */}
+      {/* fixed bottom-0: Sticks to the viewport bottom */}
+      {/* pb-[env(safe-area-inset-bottom)]: Adds padding for iPhone Home Indicator */}
+      <nav className="fixed bottom-0 w-full bg-white border-t border-slate-100 z-50 pb-[env(safe-area-inset-bottom)] max-w-md">
+        {/* Grid Container with fixed height for the buttons themselves */}
+        <div className="grid grid-cols-2 h-16">
+            {/* Record Button (Left) */}
+            <button
+            onClick={() => setActiveTab(AppTab.HISTORY)}
             className={`flex flex-col items-center justify-center gap-1 transition-colors ${
-              activeTab === AppTab.ADD 
-              ? 'bg-slate-50 text-brand-600' 
-              : 'bg-white text-slate-300 hover:text-slate-500'
+                activeTab === AppTab.HISTORY ? 'bg-slate-50 text-brand-600' : 'bg-white text-slate-300 hover:text-slate-500'
             }`}
-        >
-            {editingRecord ? (
-               <EditIcon />
-            ) : (
-               <Plus className={`w-6 h-6 ${activeTab === AppTab.ADD ? 'stroke-brand-600' : 'stroke-current'}`} />
-            )}
-            <span className="text-xs font-bold leading-none">
-                {editingRecord ? '編輯' : '新增'}
-            </span>
-        </button>
+            >
+            <List className={`w-6 h-6 ${activeTab === AppTab.HISTORY ? 'stroke-brand-600' : 'stroke-current'}`} />
+            <span className="text-xs font-bold leading-none">記錄</span>
+            </button>
+
+            {/* Add Button (Right) */}
+            <button
+                onClick={handleAddClick}
+                className={`flex flex-col items-center justify-center gap-1 transition-colors ${
+                activeTab === AppTab.ADD 
+                ? 'bg-slate-50 text-brand-600' 
+                : 'bg-white text-slate-300 hover:text-slate-500'
+                }`}
+            >
+                {editingRecord ? (
+                <EditIcon />
+                ) : (
+                <Plus className={`w-6 h-6 ${activeTab === AppTab.ADD ? 'stroke-brand-600' : 'stroke-current'}`} />
+                )}
+                <span className="text-xs font-bold leading-none">
+                    {editingRecord ? '編輯' : '新增'}
+                </span>
+            </button>
+        </div>
       </nav>
     </div>
   );
